@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import '../models/listin.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Listin> listListins = [];
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   showFormModal() {
     // Labels à serem mostradas no Modal
-    String title = "Adicionar Listin";
-    String confirmationButton = "Salvar";
-    String skipButton = "Cancelar";
+    String labelTitle = "Adicionar Listin";
+    String labelConfirmationButton = "Salvar";
+    String labelSkipButton = "Cancelar";
 
     // Controlador do campo que receberá o nome do Listin
     TextEditingController nameController = TextEditingController();
@@ -74,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // Formulário com Título, Campo e Botões
           child: ListView(
             children: [
-              Text(title, style: Theme.of(context).textTheme.headline5),
+              Text(labelTitle, style: Theme.of(context).textTheme.headline5),
               TextFormField(
                 controller: nameController,
                 decoration:
@@ -90,16 +93,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(skipButton),
+                    child: Text(labelSkipButton),
                   ),
                   const SizedBox(
                     width: 16,
                   ),
                   ElevatedButton(
-                      onPressed: () {
-                        //TODO: Implementar adição
-                      },
-                      child: Text(confirmationButton)),
+                    onPressed: () {
+                      // Criar um objeto Listin com as infos
+                      Listin listin = Listin(
+                        id: const Uuid().v1(),
+                        name: nameController.text,
+                      );
+
+                      // Salvar no Firestore
+                      firestore
+                          .collection("listins")
+                          .doc(listin.id)
+                          .set(listin.toMap());
+
+                      // Fechar o Modal
+                      Navigator.pop(context);
+                    },
+                    child: Text(labelConfirmationButton),
+                  ),
                 ],
               )
             ],
