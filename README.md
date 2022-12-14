@@ -27,7 +27,7 @@ Nesse projeto criaremos a base para o desenvolvimento de um Gerenciador de Lista
 
 ## 📁 Acesso ao projeto
 
-Você pode [acessar o código fonte do projeto](https://github.com/alura-cursos/flutter_firebase_firestore_first/tree/aula05) ou [baixá-lo](https://github.com/alura-cursos/flutter_firebase_firestore_first/archive/refs/heads/aula05.zip).
+Você pode [acessar o código fonte do projeto](https://github.com/alura-cursos/flutter_firebase_firestore_first/tree/aula04) ou [baixá-lo](https://github.com/alura-cursos/flutter_firebase_firestore_first/archive/refs/heads/aula04.zip).
 
 ## 🛠️ Abrir e rodar o projeto
 
